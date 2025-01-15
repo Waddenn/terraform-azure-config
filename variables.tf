@@ -1,8 +1,4 @@
-variable "resource_group_location" {
-  type        = string
-  default     = "eastus"
-  description = "Location for all resources."
-}
+# variables.tf
 
 variable "resource_group_name_prefix" {
   type        = string
@@ -10,48 +6,31 @@ variable "resource_group_name_prefix" {
   description = "Prefix of the resource group name that's combined with a random value so name is unique in your Azure subscription."
 }
 
-variable "container_group_name_prefix" {
+variable "resource_group_location" {
   type        = string
-  description = "Prefix of the container group name that's combined with a random value so name is unique in your Azure subscription."
-  default     = "acigroup"
+  default     = "eastus"
+  description = "Location of the resource group."
 }
 
-variable "container_name_prefix" {
+variable "prefix" {
   type        = string
-  description = "Prefix of the container name that's combined with a random value so name is unique in your Azure subscription."
-  default     = "aci"
+  default     = "linux-vm"
+  description = "Prefix for all resource names."
 }
 
-variable "image" {
+variable "vm_size" {
   type        = string
-  description = "Container image to deploy. Should be of the form repoName/imagename:tag for images stored in public Docker Hub, or a fully qualified URI for other registries. Images from private registries require additional registry credentials."
-  default     = "mcr.microsoft.com/azuredocs/aci-helloworld"
+  default     = "Standard_DS1_v2"
+  description = "Size of the VM."
 }
 
-variable "port" {
-  type        = number
-  description = "Port to open on the container and the public IP address."
-  default     = 80
-}
-
-variable "cpu_cores" {
-  type        = number
-  description = "The number of CPU cores to allocate to the container."
-  default     = 1
-}
-
-variable "memory_in_gb" {
-  type        = number
-  description = "The amount of memory to allocate to the container in gigabytes."
-  default     = 2
-}
-
-variable "restart_policy" {
+variable "admin_username" {
   type        = string
-  description = "The behavior of Azure runtime if container has stopped."
-  default     = "Always"
-  validation {
-    condition     = contains(["Always", "Never", "OnFailure"], var.restart_policy)
-    error_message = "The restart_policy must be one of the following: Always, Never, OnFailure."
-  }
+  default     = "azureuser"
+  description = "Username for the VM."
+}
+
+variable "public_key_path" {
+  type        = string
+  description = "Path to the public SSH key."
 }
